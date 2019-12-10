@@ -24,12 +24,14 @@ class Lok_sabha(tk.Tk):
         self.elect_2019=tk.Button(text='For 2009 General Election',command=self.func_2009,font="timesnewroman 10 bold",width=25)
         self.elect_2019.pack(pady=20)
 
-        self.df=pd.read_csv('C:\\Users\HARSHIT RAJ\\Desktop\Data analysis\\GE_india_2019_results.csv',encoding='cp1252')
-        self.new_df=pd.read_csv(r"C:\Users\HARSHIT RAJ\Desktop\Data analysis\election_2019.csv",encoding='cp1252')
-        self.new_df.set_index(['state/ut','PC'],inplace=True)
+        self.df=pd.read_csv(r'GE_india_2019_results.csv',encoding='cp1252')
+        
+        self.df.loc[:,'candidate_name']=self.df.loc[:,'candidate_name'].map(str.title)
+
+        self.new_df=self.df.loc[self.df['rank']<3,:].set_index(['state/ut','PC'])
 
 
-        self.df_2014=pd.read_csv(r"C:\Users\HARSHIT RAJ\Desktop\Data analysis\LS2014Candidate.csv")
+        self.df_2014=pd.read_csv(r"LS2014Candidate.csv")
         self.df_2014.loc[:,'Candidate Name']=self.df_2014.loc[:,'Candidate Name'].map(str.title)
         self.new_df_2014=self.df_2014.loc[self.df_2014['Position']<3,:].set_index(['State name','PC name'])
         one=self.new_df_2014.loc[self.new_df_2014['Position']==1,'Total Votes Polled']
@@ -39,7 +41,7 @@ class Lok_sabha(tk.Tk):
         self.new_df_2014.loc[self.new_df_2014['Position']==1,'Votes_difference']=minus
 
 
-        self.df_2009=pd.read_csv(r"C:\Users\HARSHIT RAJ\Desktop\Data analysis\LS2009Candidate.csv")
+        self.df_2009=pd.read_csv(r"C:LS2009Candidate.csv")
         self.df_2009.loc[:,'Candidate Name']=self.df_2009.loc[:,'Candidate Name'].map(str.title)
         self.new_df_2009=self.df_2009.loc[self.df_2009['Position']<3,:].set_index(['State name','PC name'])
         one=self.new_df_2009.loc[self.new_df_2009['Position']==1,'Total Votes Polled']

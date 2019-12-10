@@ -40,4 +40,3 @@ general elections.
       
       and then extract them in the same folder and do not change file name (otherwise program will crash).
       
-     Note : I will also give datasets in the repository window.

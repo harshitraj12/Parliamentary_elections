@@ -9,7 +9,7 @@ from tkinter import ttk
 class Lok_sabha(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.geometry('1920x1080')
+        self.geometry('1368x768')
         self.configure(bg='violet')
         self.title('Know Your PC')
         tk.Label(text="Parliamentary Election Data (With Graphs)",font="Arial 20 bold",bg="Orange",relief="sunken",pady=15).pack(side="top",fill="both")

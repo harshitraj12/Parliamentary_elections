@@ -9,7 +9,7 @@ from tkinter import ttk
 class Lok_sabha(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.geometry('1368x768')
+        self.geometry('1920x1080')
         self.configure(bg='violet')
         self.title('Know Your PC')
         tk.Label(text="Parliamentary Election Data (With Graphs)",font="Arial 20 bold",bg="Orange",relief="sunken",pady=15).pack(side="top",fill="both")
@@ -30,6 +30,12 @@ class Lok_sabha(tk.Tk):
 
         self.new_df=self.df.loc[self.df['rank']<3,:].set_index(['state/ut','PC'])
 
+        one=self.new_df.loc[self.new_df['rank']==1,'total_votes']
+        two=self.new_df.loc[self.new_df['rank']==2,'total_votes']
+        minus=np.subtract(one,two)
+        self.new_df.loc[self.new_df['rank']==2,'Votes_difference']=-minus
+        self.new_df.loc[self.new_df['rank']==1,'Votes_difference']=minus
+        
 
         self.df_2014=pd.read_csv(r"LS2014Candidate.csv")
         self.df_2014.loc[:,'Candidate Name']=self.df_2014.loc[:,'Candidate Name'].map(str.title)
@@ -41,7 +47,7 @@ class Lok_sabha(tk.Tk):
         self.new_df_2014.loc[self.new_df_2014['Position']==1,'Votes_difference']=minus
 
 
-        self.df_2009=pd.read_csv(r"C:LS2009Candidate.csv")
+        self.df_2009=pd.read_csv(r"LS2009Candidate.csv")
         self.df_2009.loc[:,'Candidate Name']=self.df_2009.loc[:,'Candidate Name'].map(str.title)
         self.new_df_2009=self.df_2009.loc[self.df_2009['Position']<3,:].set_index(['State name','PC name'])
         one=self.new_df_2009.loc[self.new_df_2009['Position']==1,'Total Votes Polled']
@@ -51,7 +57,7 @@ class Lok_sabha(tk.Tk):
         self.new_df_2009.loc[self.new_df_2009['Position']==1,'Votes_difference']=minus
 
     def func_2019(self):
-        child=tk.Tk()
+        child=tk.Toplevel()
         child.title('Elections 2019')
         child.attributes('-toolwindow',1)
         child.geometry('1920x1080')
@@ -63,7 +69,6 @@ class Lok_sabha(tk.Tk):
         self.state=tk.StringVar()
         self.name_combo=ttk.Combobox(frame,textvariable=self.state,width=20,state='readonly',font="timesnewroman 10 bold")
         self.name_combo['values']=tuple(self.df.loc[:,'state/ut'].unique())
-        # self.name_combo.current(4)
         self.name_combo.grid(row=0,column=1)
 
         tk.Label(frame,text='Total States and UT are',font="timesnewroman 12 bold",bg='orange').grid(row=2,column=0,padx=20,pady=10)
@@ -84,15 +89,14 @@ class Lok_sabha(tk.Tk):
             tk.Label(frame,text=self.new_df.reset_index(level=1).loc[get_state,'PC'].unique().size,font="timesnewroman 12 bold",bg='orange').grid(row=3,column=1)
 
             submit_button.configure(state='normal')
-        # get_pc=tk.Button(child,text='Load PC',command=load_pc,font="timesnewroman 10 bold",width=10)
-        # get_pc.pack()
+       
         self.name_combo.bind("<<ComboboxSelected>>",load_pc)
 
 
 
         def plott():
             try:
-                child2=tk.Tk()
+                child2=tk.Toplevel()
                 child2.geometry('1920x1080')
                 child2.attributes('-toolwindow',1)
                 child2.configure(bg='#ff5050')
@@ -106,7 +110,7 @@ class Lok_sabha(tk.Tk):
                 child2.title(f'{get_state} - {PC} - 2019')
                 a=check_df.loc[(check_df['state/ut']==get_state)&(check_df['PC']==PC),:]
                 a.reset_index().set_index('candidate_name').loc[:,['total_votes']].plot(kind='barh',ax=ax,title='Vote Comparison')
-                show_label=tk.Label(child2,text=a.set_index('candidate_name').loc[:,['total_votes','party','votes_difference']],font='arial 12 bold',bg='#66ff66')
+                show_label=tk.Label(child2,text=a.set_index('candidate_name').loc[:,['total_votes','party','Votes_difference']],font='arial 12 bold',bg='#66ff66')
                 show_label.pack(pady=10)
                 a.reset_index().set_index('candidate_name').loc[:,['total_votes']].plot(kind='pie',ax=ax2,subplots=True,title='Vote Comparison')
                 canvas = FigureCanvasTkAgg(fig, child2)
@@ -141,7 +145,7 @@ class Lok_sabha(tk.Tk):
         child.mainloop()
 
     def func_2014(self):
-        child=tk.Tk()
+        child=tk.Toplevel()
         child.title('Elections 2014')
         child.attributes('-toolwindow',1)
         child.geometry('1920x1080')
@@ -153,7 +157,6 @@ class Lok_sabha(tk.Tk):
         self.state=tk.StringVar()
         self.name_combo=ttk.Combobox(frame,textvariable=self.state,width=20,state='readonly',font="timesnewroman 10 bold")
         self.name_combo['values']=tuple(sorted(self.df_2014.loc[:,'State name'].unique()))
-        # self.name_combo.current(4)
         self.name_combo.grid(row=0,column=1)
         tk.Label(frame,text='Total States and UT are',font="timesnewroman 12 bold",bg='lightgreen').grid(row=2,column=0,padx=20,pady=10)
         tk.Label(frame,text=self.df_2014.loc[:,'State name'].unique().size,font="timesnewroman 12 bold",bg='lightgreen').grid(row=2,column=1)
@@ -173,15 +176,14 @@ class Lok_sabha(tk.Tk):
             tk.Label(frame,text=self.new_df_2014.reset_index(level=1).loc[get_state,'PC name'].unique().size,font="timesnewroman 12 bold",bg='lightgreen').grid(row=3,column=1)
             submit_button.configure(state='normal')
 
-        # get_pc=tk.Button(child,text='Load PC',command=load_pc,font="timesnewroman 10 bold",width=10)
-        # get_pc.pack()
+        
         self.name_combo.bind("<<ComboboxSelected>>",load_pc)
 
 
 
         def plott():
             try:
-                child2=tk.Tk()
+                child2=tk.Toplevel()
                 child2.geometry('1920x1080')
                 child2.configure(bg='skyblue')
                 check_df=self.new_df_2014.reset_index()
@@ -230,7 +232,7 @@ class Lok_sabha(tk.Tk):
         child.mainloop()
 
     def func_2009(self):
-        child=tk.Tk()
+        child=tk.Toplevel()
         child.title('Elections 2009')
         child.attributes('-toolwindow',1)
         child.geometry('1920x1080')
@@ -262,14 +264,13 @@ class Lok_sabha(tk.Tk):
 
             submit_button.configure(state='normal')
 
-        # get_pc=tk.Button(child,text='Load PC',command=load_pc,font="timesnewroman 10 bold",width=10)
-        # get_pc.pack()
+        
         self.name_combo.bind("<<ComboboxSelected>>",load_pc)
 
 
         def plott():
             try:
-                child2=tk.Tk()
+                child2=tk.Toplevel()
                 child2.geometry('1920x1080')
                 child2.configure(bg='#ff3399')
                 child2.attributes('-toolwindow',1)

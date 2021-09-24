@@ -5,7 +5,7 @@ base = None
 
 if sys.platform == 'win32':
     base = "Win32GUI"
-
+    
 os.environ['TCL_LIBRARY'] = r"C:\Users\HARSHIT RAJ\AppData\Local\Programs\Python\Python37\tcl\tcl8.6"
 os.environ['TK_LIBRARY'] = r"C:\Users\HARSHIT RAJ\AppData\Local\Programs\Python\Python37\tcl\tk8.6"
 

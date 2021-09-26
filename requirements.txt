@@ -1,8 +1,0 @@
-Modules and tools required for this project
-
-1. numpy
-2. pandas
-3. matplotlib
-4. tkinter
-
-and Knowledge of python

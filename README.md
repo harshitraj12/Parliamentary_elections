@@ -53,7 +53,13 @@ To deploy this application:
   pip install matplotlib
 ```
 
-7. Run the file
+7. Install Package from requirements.txt
+
+```bash
+  pip install -r requirements.txt
+```
+
+8. Run the file
 
 ```bash
   python Parliamentary Elections(GUI and Graphs).py

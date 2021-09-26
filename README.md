@@ -62,9 +62,9 @@ To deploy this application:
 
 1. Open the dist folder.
 
-2. Copy the msi file from it and install it in your local machine.
+2. Download and install .msi file in your local machine.
 
-3. The application  is ready to use
+3. The application is ready for use. Open the executable file to open the application.
 
 
 

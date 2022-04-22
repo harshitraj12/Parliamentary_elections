@@ -66,7 +66,7 @@ Pygments==2.4.2
 PyInstaller==3.5
 PyJWT==1.7.1
 pyparsing==2.4.2
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 pypiwin32==223
 pyrsistent==0.15.5
 python-dateutil==2.8.0
